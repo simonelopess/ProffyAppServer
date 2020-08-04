@@ -1,18 +1,9 @@
 import express from 'express';
-import db from './database/connection';
+import ClassesController from './controllers/ClassesController';
 
 const routes = express.Router();
+const classesController = new ClassesController();
 
-routes.post('/classes', async (request, response) => {
-  const { name, avatar, whatsapp, bio, subject, cost, schedule } = request.body;
-
-  await db('users').insert({
-    name,
-    avatar,
-    whatsapp,
-    bio,
-  });
-  return response.send();
-});
-
+routes.post('/classes', classesController.create);
+routes.get('/classes', classesController.index);
 export default routes;
